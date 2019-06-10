@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.TaskMapper">
+    <resultMap id="task" type="com.pojo.Task">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="content" column="content"/>
+        <result property="create_time" column="create_time"/>
+        <result property="creator" column="creator"/>
+        <result property="executor" column="executor"/>
+        <result property="start_time" column="start_time"/>
+        <result property="finish_time" column="finish_time"/>
+        <result property="state" column="state"/>
+
+    </resultMap>
+    <select id="search" resultMap="task">
+        select * from task
+    </select>
+    <select id="insert">
+        INSERT INTO task (name,content,create_time,creator) value (#{Pojo.name},#{Pojo.content},#{Pojo.create_time},#{Pojo.creator})
+    </select>
+    <select id="delete">
+        delete from task where id=#{Pojo.id}
+    </select>
+    <select id="update">
+        update task set name=#{Pojo.name},content=#{Pojo.content},finish_time=#{Pojo.finish_time},state=#{Pojo.state} where id=#{Pojo.id}
+    </select>
+    <select id="accept">
+        update task set executor=#{Pojo.executor},start_time=#{Pojo.start_time} where id=#{Pojo.id}
+    </select>
+
+    <select id="myAccept" resultMap="task">
+        select * from task where executor=#{Pojo.executor}
+    </select>
+
+    <select id="myRelease" resultMap="task">
+        select * from task where creator=#{Pojo.creator}
+    </select>
+<!--    详情-->
+    <select id="details" resultMap="task">
+        select * from task where id=#{Pojo.id}
+    </select>
+<!--    分页-->
+    <select id="paging" resultMap="task">
+        select * from task limit #{Pojo.pagNum},#{Pojo.pagSize}
+    </select>
+<!--    长度-->
+    <select id="length" resultType="java.lang.Integer">
+        select count(id) from task
+    </select>
+</mapper>

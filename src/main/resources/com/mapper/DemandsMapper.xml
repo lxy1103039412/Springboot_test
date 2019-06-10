@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.DemandsMapper">
+    <resultMap id="demands" type="com.pojo.Demands">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="content" column="content"/>
+        <result property="create_time" column="create_time"/>
+        <result property="creator" column="creator"/>
+
+
+    </resultMap>
+    <select id="search" resultMap="demands">
+        SELECT * FROM demands
+    </select>
+    <select id="insert">
+        INSERT INTO demands (name,content,create_time,creator) value (#{Pojo.name},#{Pojo.content},#{Pojo.create_time},#{Pojo.creator})
+    </select>
+    <select id="update">
+        update demands set name=#{Pojo.name},content=#{Pojo.content} where id=#{Pojo.id}
+    </select>
+    <select id="delete">
+        delete from demands where id=#{Pojo.id}
+    </select>
+<!--    批量删除-->
+    <select id="delete_more">
+        delete from demands where id=#{del_more}
+    </select>
+
+</mapper>
